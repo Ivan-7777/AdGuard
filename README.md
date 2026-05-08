@@ -1,4 +1,4 @@
-# 🛡️ AdGuard Home: DNS Sinkhole y Bloqueo de Rastreadores a Nivel de Red
+# AdGuard Home: DNS Sinkhole y Bloqueo de Rastreadores a Nivel de Red
 
 Bienvenido a la documentación de este proyecto, donde se implementa un **DNS Sinkhole** (Sumidero DNS) utilizando **AdGuard Home** desplegado a través de **Docker**. 
 
@@ -6,7 +6,7 @@ El objetivo principal de esta infraestructura es proporcionar una capa de seguri
 
 ---
 
-## 📖 Índice
+## Índice
 1. [¿Qué es AdGuard Home y cómo funciona?](#-qué-es-adguard-home-y-cómo-funciona)
 2. [Arquitectura y Despliegue con Docker](#-arquitectura-y-despliegue-con-docker)
 3. [Configuración a Nivel de Sistema Operativo](#-configuración-a-nivel-de-sistema-operativo)
@@ -16,7 +16,7 @@ El objetivo principal de esta infraestructura es proporcionar una capa de seguri
 
 ---
 
-## 🧠 ¿Qué es AdGuard Home y cómo funciona?
+## ¿Qué es AdGuard Home y cómo funciona?
 
 Cuando navegas por internet, tu ordenador necesita traducir nombres de dominio legibles por humanos (como `google.com`) a direcciones IP legibles por máquinas (como `142.251.142.142`). Este proceso lo realiza un servidor **DNS (Domain Name System)**.
 
@@ -32,7 +32,7 @@ Para realizar estos bloqueos, el sistema se apoya en listas mantenidas por la co
 
 ---
 
-## 🐳 Arquitectura y Despliegue con Docker
+## Arquitectura y Despliegue con Docker
 
 Para garantizar la portabilidad y el aislamiento del servicio, se ha optado por un despliegue en contenedores usando `Docker Compose`.
 
@@ -66,7 +66,7 @@ services:
 
 ---
 
-## ⚙️ Configuración a Nivel de Sistema Operativo
+## Configuración a Nivel de Sistema Operativo
 
 Una vez desplegado el contenedor, la máquina local no utilizará automáticamente este DNS. Para completar la integración, el tráfico del sistema operativo se enrutó forzosamente a través de nuestro nuevo DNS local (`127.0.0.1`).
 
@@ -82,7 +82,7 @@ A partir de la ejecución de este comando, **cada petición de la máquina es au
 ![Configuración DNS en Windows](CONFIG_DNS.png)
 ---
 
-## 🎯 Demostración de Filtrado DNS
+## Demostración de Filtrado DNS
 
 Para evidenciar científicamente que el bloqueo a nivel de red está activo, se han ejecutado pruebas de resolución de nombres directamente a través de comandos del sistema (`Resolve-DnsName`), saltándose la caché del navegador para obtener resultados limpios.
 
@@ -96,7 +96,7 @@ Name                                           Type   TTL   Section    IPAddress
 ----                                           ----   ---   -------    ---------                                
 google.com                                     A      102   Answer     142.251.142.142   
 ```
-✅ **Resultado:** AdGuard Home resuelve la petición devolviendo la dirección IP real de los servidores de Google.
+**Resultado:** AdGuard Home resuelve la petición devolviendo la dirección IP real de los servidores de Google.
 
 ### Prueba 2: Resolución de un dominio publicitario / rastreador (Sinkhole en acción)
 Consultamos `ad.doubleclick.net`, un conocido servidor masivo de anuncios y telemetría de Google.
@@ -109,7 +109,7 @@ Name                                           Type   TTL   Section    IPAddress
 ad.doubleclick.net                             AAAA   10    Answer     ::                                       
 ad.doubleclick.net                             A      10    Answer     0.0.0.0 
 ```
-🚫 **Resultado:** El dominio está presente en el "AdGuard DNS filter" activo. El servidor intercepta la petición y aplica la acción de Sinkholing, devolviendo la IP vacía `0.0.0.0`. Las aplicaciones que intenten descargar publicidad de este dominio fallarán instantáneamente, logrando un bloqueo silencioso y eficiente.
+**Resultado:** El dominio está presente en el "AdGuard DNS filter" activo. El servidor intercepta la petición y aplica la acción de Sinkholing, devolviendo la IP vacía `0.0.0.0`. Las aplicaciones que intenten descargar publicidad de este dominio fallarán instantáneamente, logrando un bloqueo silencioso y eficiente.
 
 ### Vista desde el Registro de Consultas (Query Log)
 El bloqueo y la resolución legítima también son visibles de forma granular y en tiempo real a través del panel de registros:
@@ -118,7 +118,7 @@ El bloqueo y la resolución legítima también son visibles de forma granular y 
 
 ---
 
-## 📊 Panel de Control y Monitoreo
+## Panel de Control y Monitoreo
 
 AdGuard Home proporciona una interfaz web de gestión accesible localmente, donde se pueden visualizar métricas avanzadas, como los clientes más activos, el ratio de dominios bloqueados frente a permitidos, el tiempo medio de procesamiento por consulta, y registros (logs) detallados en tiempo real.
 
@@ -128,7 +128,7 @@ A continuación, la evidencia de captura visual demostrando el funcionamiento en
 
 ---
 
-## 💡 Explicación de Decisiones Técnicas
+## Explicación de Decisiones Técnicas
 
 Para cumplir estrictamente con los requisitos del proyecto, se han tomado las siguientes decisiones de diseño:
 
@@ -143,7 +143,7 @@ Para cumplir estrictamente con los requisitos del proyecto, se han tomado las si
 
 ---
 
-## 🔧 Recuperación y Mantenimiento
+## Recuperación y Mantenimiento
 
 En infraestructuras de este tipo, la dependencia del contenedor Docker es absoluta para la resolución de nombres. Si el contenedor se detiene accidentalmente, la máquina se quedará sin acceso a Internet. 
 
