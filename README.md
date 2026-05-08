@@ -6,7 +6,7 @@ El objetivo principal de esta infraestructura es proporcionar una capa de seguri
 
 ---
 
-## 📖 Índice
+## Índice
 1. [¿Qué es AdGuard Home y cómo funciona?](#-qué-es-adguard-home-y-cómo-funciona)
 2. [Arquitectura y Despliegue con Docker](#-arquitectura-y-despliegue-con-docker)
 3. [Configuración a Nivel de Sistema Operativo](#-configuración-a-nivel-de-sistema-operativo)
